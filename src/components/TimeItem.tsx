@@ -12,7 +12,7 @@ const TimeItem = observer(({ time }: Props) => {
     rootStore.setSelectedTime(time);
   };
 
-  const isSelectedTime = rootStore.selectetTime === time;
+  const isSelectedTime = rootStore.selectedTime === time;
 
   return (
     <button

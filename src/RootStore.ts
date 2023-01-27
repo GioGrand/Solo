@@ -8,7 +8,7 @@ class RootStore {
   periods = ["Anytime", "Morning", "Afternoon", "Evening"];
 
   selectedDay: string | null = null;
-  selectetTime: string | null = null;
+  selectedTime: string | null = null;
   selectedPeriod: string | null = null;
 
   constructor() {
@@ -16,7 +16,7 @@ class RootStore {
       days: observable,
       times: observable,
       selectedDay: observable,
-      selectetTime: observable,
+      selectedTime: observable,
       selectedPeriod: observable,
     });
 
@@ -34,7 +34,7 @@ class RootStore {
   };
 
   setSelectedTime = (time: string) => {
-    this.selectetTime = time;
+    this.selectedTime = time;
   };
 
   setSelectedPeriod = (period: string) => {
@@ -46,7 +46,7 @@ class RootStore {
   };
 
   clearSelectedTime = () => {
-    this.selectetTime = null;
+    this.selectedTime = null;
   };
 }
 

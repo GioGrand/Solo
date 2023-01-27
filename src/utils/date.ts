@@ -56,4 +56,21 @@ const getHours = (startTime: string, endTime: string, interval: number) => {
   return res.slice(0, -1);
 };
 
-export { formatDate, formatTime, getDays, getHours };
+/**
+ * @param day Selected day
+ * @param time Selected time
+ * Generates a date as: 12:30 on Tue 2nd January 21
+ */
+const formatBookingDate = (day: string, time: string) => {
+  const date = moment(day);
+  const timee = moment(time, "HH:mm");
+
+  date.set({
+    hour: timee.get("hour"),
+    minute: timee.get("minute"),
+  });
+
+  return date.format("HH:mm on ddd Do MMMM YY");
+};
+
+export { formatDate, formatTime, getDays, formatBookingDate, getHours };
