@@ -23,6 +23,10 @@ class RootStore {
     this.times = getHours("06:00", "22:00", 15);
 
     this.days = getDays(4);
+
+    this.selectedDay = this.days[0];
+
+    this.selectedPeriod = this.periods[0];
   }
 
   setSelectedDay = (day: string) => {
