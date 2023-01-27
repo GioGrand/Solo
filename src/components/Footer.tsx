@@ -1,9 +1,14 @@
 import { observer } from "mobx-react-lite";
+
 import { useStore } from "../App";
 import { formatBookingDate } from "../utils/date";
 
 const Footer = observer(() => {
-  const { selectedDay, selectedTime } = useStore();
+  const { selectedDay, selectedTime, requestBooking } = useStore();
+
+  const handleRequestBooking = () => {
+    requestBooking();
+  };
 
   return (
     <div className="footer">
@@ -17,7 +22,13 @@ const Footer = observer(() => {
         </p>
         <p>0 professionals available</p>
       </div>
-      <button className="bookButton">Book Now</button>
+      <button
+        onClick={handleRequestBooking}
+        className={`bookButton ${!selectedTime ? "disabled" : ""}`}
+        disabled={!selectedTime}
+      >
+        Book Now
+      </button>
     </div>
   );
 });
