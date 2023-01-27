@@ -1,15 +1,20 @@
 import { makeObservable, observable } from "mobx";
 
-import { getDays, getHours } from "./utils/date";
+import { getDays, getHours, Period } from "./utils/date";
 
 class RootStore {
   days: string[] = [];
   times: string[] = [];
-  periods = ["Anytime", "Morning", "Afternoon", "Evening"];
+  periods: Period[] = [
+    Period.Anytime,
+    Period.Morning,
+    Period.Afternoon,
+    Period.Evening,
+  ];
 
   selectedDay: string | null = null;
   selectedTime: string | null = null;
-  selectedPeriod: string | null = null;
+  selectedPeriod: Period | null = null;
 
   constructor() {
     makeObservable(this, {
@@ -37,7 +42,7 @@ class RootStore {
     this.selectedTime = time;
   };
 
-  setSelectedPeriod = (period: string) => {
+  setSelectedPeriod = (period: Period) => {
     this.selectedPeriod = period;
   };
 

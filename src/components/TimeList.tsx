@@ -1,16 +1,21 @@
+import { observer } from "mobx-react-lite";
+
 import { useStore } from "../App";
+import { filterTimes } from "../utils/date";
 import TimeItem from "./TimeItem";
 
-const TimeList = () => {
-  const rootStore = useStore();
+const TimeList = observer(() => {
+  const { times, selectedPeriod } = useStore();
+
+  const list = selectedPeriod ? filterTimes(times, selectedPeriod) : times;
 
   return (
     <div className="timeList">
-      {rootStore.times.map((t) => (
+      {list.map((t) => (
         <TimeItem time={t} key={t} />
       ))}
     </div>
   );
-};
+});
 
 export default TimeList;
