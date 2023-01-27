@@ -1,6 +1,8 @@
-import { makeObservable, observable } from "mobx";
+import moment from "moment";
+import { computed, makeObservable, observable, runInAction } from "mobx";
 
-import { getDays, getHours, Period } from "./utils/date";
+import mockApi from "./mockApi";
+import { filterTimes, getDays, getHours, Period } from "./utils/date";
 import { getConfirmationText } from "./utils/form";
 
 class RootStore {
@@ -17,6 +19,8 @@ class RootStore {
   selectedTime: string | null = null;
   selectedPeriod: Period | null = null;
 
+  loadingPros: boolean = false;
+
   numberOfPros: number;
 
   constructor() {
@@ -27,6 +31,8 @@ class RootStore {
       selectedTime: observable,
       selectedPeriod: observable,
       numberOfPros: observable,
+      loadingPros: observable,
+      filteredTimes: computed,
     });
 
     this.times = getHours("06:00", "22:00", 15);
@@ -42,6 +48,7 @@ class RootStore {
 
   setSelectedDay = (day: string) => {
     this.selectedDay = day;
+    this.fetchPros();
   };
 
   setSelectedTime = (time: string) => {
@@ -70,6 +77,29 @@ class RootStore {
   clearSelectedTime = () => {
     this.selectedTime = null;
   };
+
+  get filteredTimes() {
+    if (!this.selectedPeriod) return this.times;
+    return filterTimes(this.times, this.selectedPeriod);
+  }
+
+  async fetchPros() {
+    this.loadingPros = true;
+    try {
+      const dayNumber = moment(this.selectedDay).day();
+
+      const pros = await mockApi.getNumberOfPros(dayNumber);
+
+      runInAction(() => {
+        this.numberOfPros = pros;
+        this.loadingPros = false;
+      });
+    } catch (e) {
+      runInAction(() => {
+        this.loadingPros = false;
+      });
+    }
+  }
 }
 
 export default RootStore;

@@ -1,41 +1,20 @@
-import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import moment from "moment";
 
 import { useStore } from "../App";
-import mockApi from "../mockApi";
 import { formatBookingDate } from "../utils/date";
 
 const Footer = observer(() => {
   const {
     selectedDay,
     numberOfPros,
-    setNumberOfPros,
+    loadingPros,
     selectedTime,
     requestBooking,
   } = useStore();
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleRequestBooking = () => {
     requestBooking();
   };
-
-  useEffect(() => {
-    const fetchPros = async () => {
-      try {
-        setLoading(true);
-        if (!selectedDay) return;
-        const dayNumber = moment(selectedDay).day();
-        const res = await mockApi.getNumberOfPros(dayNumber);
-        setNumberOfPros(res > 0 ? res : 0);
-        setLoading(false);
-      } catch (e) {
-        console.log(e);
-        setLoading(false);
-      }
-    };
-    fetchPros();
-  }, [selectedDay, setNumberOfPros]);
 
   return (
     <div className="footer">
@@ -48,7 +27,7 @@ const Footer = observer(() => {
           </b>
         </p>
         <p>
-          {loading
+          {loadingPros
             ? "..."
             : `${numberOfPros} propfessional${
                 numberOfPros === 1 ? "" : "s"

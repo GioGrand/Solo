@@ -1,9 +1,10 @@
 import { observer } from "mobx-react-lite";
 
 import { useStore } from "../App";
+import { Period } from "../utils/date";
 
 interface Props {
-  period: string;
+  period: Period;
 }
 
 const PeriodItem = observer(({ period }: Props) => {
