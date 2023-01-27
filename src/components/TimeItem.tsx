@@ -1,11 +1,27 @@
-import { formatTime } from "../utils/date";
+import { observer } from "mobx-react-lite";
 
+import { useStore } from "../App";
 interface Props {
-  time: number;
+  time: string;
 }
 
-const TimeItem = ({ time }: Props) => {
-  return <button className="timeItem">{formatTime(time)}</button>;
-};
+const TimeItem = observer(({ time }: Props) => {
+  const rootStore = useStore();
+
+  const handleSelectTime = () => {
+    rootStore.setSelectedTime(time);
+  };
+
+  const isSelectedTime = rootStore.selectetTime === time;
+
+  return (
+    <button
+      onClick={handleSelectTime}
+      className={`timeItem ${isSelectedTime ? "selected" : ""}`}
+    >
+      {time}
+    </button>
+  );
+});
 
 export default TimeItem;

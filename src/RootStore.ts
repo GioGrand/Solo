@@ -7,16 +7,35 @@ class RootStore {
   times: string[] = [];
   periods = ["Anytime", "Morning", "Afternoon", "Evening"];
 
+  selectedDay: string | null = null;
+  selectetTime: string | null = null;
+  selectedPeriod: string | null = null;
+
   constructor() {
     makeObservable(this, {
       days: observable,
       times: observable,
+      selectedDay: observable,
+      selectetTime: observable,
+      selectedPeriod: observable,
     });
 
     this.times = getHours("06:00", "22:00", 15);
 
     this.days = getDays(4);
   }
+
+  setSelectedDay = (day: string) => {
+    this.selectedDay = day;
+  };
+
+  setSelectedTime = (time: string) => {
+    this.selectetTime = time;
+  };
+
+  setSelectedPeriod = (period: string) => {
+    this.selectedPeriod = period;
+  };
 
   requestBooking = () => {
     alert("Booking requested!");

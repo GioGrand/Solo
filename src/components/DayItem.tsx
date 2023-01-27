@@ -1,11 +1,29 @@
+import { observer } from "mobx-react-lite";
+
+import { useStore } from "../App";
 import { formatDate } from "../utils/date";
 
 interface Props {
   day: string;
 }
 
-const DayItem = ({ day }: Props) => {
-  return <button className="dayItem">{formatDate(day)}</button>;
-};
+const DayItem = observer(({ day }: Props) => {
+  const rootStore = useStore();
+
+  const handleSelectDay = () => {
+    rootStore.setSelectedDay(day);
+  };
+
+  const isSelectedDay = rootStore.selectedDay === day;
+
+  return (
+    <button
+      onClick={handleSelectDay}
+      className={`dayItem ${isSelectedDay ? "selected" : ""}`}
+    >
+      {formatDate(day)}
+    </button>
+  );
+});
 
 export default DayItem;
