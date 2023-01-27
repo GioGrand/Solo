@@ -8,4 +8,12 @@ const formatDate = (date: string) => {
   return moment(date, "YYYY-MM-DD").format("MMM Do YYYY");
 };
 
-export { formatDate };
+/**
+ * @param time The input time
+ * Converts a time: 6.75 => 6:45
+ */
+const formatTime = (time: number) => {
+  return moment(time, "HH.mm").format("HH:mm");
+};
+
+export { formatDate, formatTime };
