@@ -35,4 +35,25 @@ const getDays = (weeks: number) => {
   return days;
 };
 
-export { formatDate, formatTime, getDays };
+/**
+ * @param startTime The initial time
+ * @param endTime The final time
+ * @param interval Interval in minutes
+ * Generates an array of time for the specified timeframe
+ */
+const getHours = (startTime: string, endTime: string, interval: number) => {
+  const start = moment(startTime, "hh:mm");
+  const end = moment(endTime, "hh:mm");
+
+  const intervals = moment.duration(end.diff(start)).as("minutes");
+
+  const res = [];
+  for (let i = 0; i <= intervals; i += interval) {
+    start.add(i === 0 ? 0 : interval, "minutes");
+    res.push(start.format("HH:mm"));
+  }
+
+  return res.slice(0, -1);
+};
+
+export { formatDate, formatTime, getDays, getHours };
