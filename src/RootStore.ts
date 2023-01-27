@@ -44,6 +44,10 @@ class RootStore {
   requestBooking = () => {
     alert("Booking requested!");
   };
+
+  clearSelectedTime = () => {
+    this.selectetTime = null;
+  };
 }
 
 export default RootStore;

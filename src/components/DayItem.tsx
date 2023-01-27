@@ -12,6 +12,7 @@ const DayItem = observer(({ day }: Props) => {
 
   const handleSelectDay = () => {
     rootStore.setSelectedDay(day);
+    rootStore.clearSelectedTime();
   };
 
   const isSelectedDay = rootStore.selectedDay === day;
