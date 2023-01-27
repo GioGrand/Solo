@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 
 import { useStore } from "../App";
+import { isUnavailableTime } from "../utils/date";
 interface Props {
   time: string;
 }
@@ -17,7 +18,9 @@ const TimeItem = observer(({ time }: Props) => {
   return (
     <button
       onClick={handleSelectTime}
-      className={`timeItem ${isSelectedTime ? "selected" : ""}`}
+      className={`timeItem ${isSelectedTime ? "selected" : ""} ${
+        isUnavailableTime(time) ? "disabled" : ""
+      }`}
     >
       {time}
     </button>

@@ -73,4 +73,21 @@ const formatBookingDate = (day: string, time: string) => {
   return date.format("HH:mm on ddd Do MMMM YY");
 };
 
-export { formatDate, formatTime, getDays, formatBookingDate, getHours };
+/**
+ * @param time item time
+ * Checks if the time is disabled
+ */
+const isUnavailableTime = (time: string) => {
+  const t = moment(time, "HH:mm");
+  const res = moment().add(2, "hour").isSameOrAfter(t);
+  return res;
+};
+
+export {
+  formatDate,
+  formatTime,
+  isUnavailableTime,
+  getDays,
+  formatBookingDate,
+  getHours,
+};
