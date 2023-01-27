@@ -1,6 +1,7 @@
 import { makeObservable, observable } from "mobx";
 
 import { getDays, getHours, Period } from "./utils/date";
+import { getConfirmationText } from "./utils/form";
 
 class RootStore {
   days: string[] = [];
@@ -16,6 +17,8 @@ class RootStore {
   selectedTime: string | null = null;
   selectedPeriod: Period | null = null;
 
+  numberOfPros: number;
+
   constructor() {
     makeObservable(this, {
       days: observable,
@@ -23,6 +26,7 @@ class RootStore {
       selectedDay: observable,
       selectedTime: observable,
       selectedPeriod: observable,
+      numberOfPros: observable,
     });
 
     this.times = getHours("06:00", "22:00", 15);
@@ -32,6 +36,8 @@ class RootStore {
     this.selectedDay = this.days[0];
 
     this.selectedPeriod = this.periods[0];
+
+    this.numberOfPros = 0;
   }
 
   setSelectedDay = (day: string) => {
@@ -47,7 +53,18 @@ class RootStore {
   };
 
   requestBooking = () => {
-    alert("Booking requested!");
+    if (!this.selectedTime || !this.selectedDay) return null;
+    alert(
+      getConfirmationText(
+        this.selectedTime,
+        this.selectedDay,
+        this.numberOfPros
+      )
+    );
+  };
+
+  setNumberOfPros = (number: number) => {
+    this.numberOfPros = number;
   };
 
   clearSelectedTime = () => {

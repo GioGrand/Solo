@@ -7,8 +7,13 @@ import mockApi from "../mockApi";
 import { formatBookingDate } from "../utils/date";
 
 const Footer = observer(() => {
-  const { selectedDay, selectedTime, requestBooking } = useStore();
-  const [numberOfPros, setNumberOfPros] = useState<number>(0);
+  const {
+    selectedDay,
+    numberOfPros,
+    setNumberOfPros,
+    selectedTime,
+    requestBooking,
+  } = useStore();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleRequestBooking = () => {
@@ -30,7 +35,7 @@ const Footer = observer(() => {
       }
     };
     fetchPros();
-  }, [selectedDay]);
+  }, [selectedDay, setNumberOfPros]);
 
   return (
     <div className="footer">
